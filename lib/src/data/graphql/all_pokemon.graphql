@@ -1,0 +1,10 @@
+
+#import '../model/pokemon_fragment.graphql'
+
+query AllPokemon($limit: Int!, $offset: Int!) {
+  pokemons(limit: $limit, offset: $offset) {
+    results {
+      ...PokemonCard
+    }
+  }
+}
