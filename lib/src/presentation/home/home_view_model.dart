@@ -18,8 +18,9 @@ class HomeViewModel extends StateNotifier<AsyncValue<List<GPokemonCard>>> {
   final pokemons = <GPokemonCard>[];
   int offset = 0;
   void load() {
+    print("load");
     state = const AsyncValue.loading();
-    _repository.pokemons(50, offset).listen((event) {
+    _repository.pokemons(20, offset).listen((event) {
       if (!event.loading) {
         if (event.hasErrors) {
           if (event.graphqlErrors != null) {
@@ -37,7 +38,7 @@ class HomeViewModel extends StateNotifier<AsyncValue<List<GPokemonCard>>> {
   }
 
   void loadMore() {
-    offset += 50;
+    offset += 20;
     load();
   }
 }

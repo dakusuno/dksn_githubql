@@ -8,36 +8,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  Widget createGrid(
-      List<GPokemonCard> pokemons, ScrollController scrollController,
-      {bool isLoading = false, bool isError = false}) {
-    return Stack(
-      children: [
-        GridView.builder(
-          controller: scrollController,
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 362,
-              childAspectRatio: 362 / 580,
-              crossAxisSpacing: 4,
-              mainAxisSpacing: 4),
-          itemBuilder: (context, index) {
-            return Text(pokemons[index].name);
-          },
-          itemCount: pokemons.length,
-        ),
-        if (isLoading)
-          const Positioned(
-            bottom: 10,
-            right: 10,
-            child: Text("Yahaha Loading"),
-          )
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pokemons = ref.watch(homeViewModelProvider.notifier).pokemons;
+    final pokemonProvider = ref.watch(homeViewModelProvider.notifier);
+    final pokemonState = ref.watch(homeViewModelProvider);
     final scrollController = useScrollController();
     useEffect(() {
       scrollController.addListener(() {
@@ -50,13 +24,27 @@ class HomePage extends HookConsumerWidget {
     return Scaffold(
         appBar: AppBar(title: Text("Halo")),
         body: Container(
-          child: ref.watch(homeViewModelProvider).when(
-              data: (_) => createGrid(pokemons, scrollController),
-              error: (_, __) {
-                return createGrid(pokemons, scrollController);
+            child: Stack(
+          children: [
+            GridView.builder(
+              controller: scrollController,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 362,
+                  childAspectRatio: 362 / 580,
+                  crossAxisSpacing: 4,
+                  mainAxisSpacing: 4),
+              itemBuilder: (context, index) {
+                return Text(pokemonProvider.pokemons[index].name);
               },
-              loading: () =>
-                  createGrid(pokemons, scrollController, isLoading: true)),
-        ));
+              itemCount: pokemonProvider.pokemons.length,
+            ),
+            if (pokemonState is AsyncLoading)
+              const Positioned(
+                bottom: 10,
+                right: 10,
+                child: Text("Yahaha Loading"),
+              )
+          ],
+        )));
   }
 }

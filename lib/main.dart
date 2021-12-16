@@ -1,5 +1,5 @@
 import 'package:dksn_githubql/src/presentation/home/home_view_model.dart';
-import 'package:dksn_githubql/src/presentation/home/hove_page.dart';
+import 'package:dksn_githubql/src/presentation/home/home_page.dart';
 import 'package:dksn_githubql/src/presentation/model/pokemon_state.dart';
 import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:flutter/material.dart';
