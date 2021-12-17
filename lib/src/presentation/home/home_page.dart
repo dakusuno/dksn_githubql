@@ -10,7 +10,6 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pokemonProvider = ref.watch(homeViewModelProvider.notifier);
     final pokemonState = ref.watch(homeViewModelProvider);
     final scrollController = useScrollController();
     useEffect(() {
@@ -34,11 +33,11 @@ class HomePage extends HookConsumerWidget {
                   crossAxisSpacing: 4,
                   mainAxisSpacing: 4),
               itemBuilder: (context, index) {
-                return Text(pokemonProvider.pokemons[index].name);
+                return Text(pokemonState.pokemons[index].name);
               },
-              itemCount: pokemonProvider.pokemons.length,
+              itemCount: pokemonState.pokemons.length,
             ),
-            if (pokemonState is AsyncLoading)
+            if (pokemonState.state is AsyncLoading)
               const Positioned(
                 bottom: 10,
                 right: 10,
