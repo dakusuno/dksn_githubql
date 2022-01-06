@@ -39,6 +39,7 @@ app.*.symbols
 */__generated__
 *.gql.g.dart
 *.gql.dart
+*.freezed.dart
 
 
 # Obfuscation related

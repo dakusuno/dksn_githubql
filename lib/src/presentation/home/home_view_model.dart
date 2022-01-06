@@ -3,11 +3,11 @@ import 'package:dksn_githubql/src/data/repository/pokemon_repository_impl.dart';
 import 'package:dksn_githubql/src/domain/repository/pokemon_repository.dart';
 import 'package:dksn_githubql/src/presentation/home/home_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:built_collection/built_collection.dart';
 
 final homeViewModelProvider =
-    StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
-        (ref) => HomeViewModel(ref.read(pokemonRepositoryProvider)));
+    StateNotifierProvider.autoDispose<HomeViewModel, HomeState>((ref) {
+  return HomeViewModel(ref.read(pokemonRepositoryProvider));
+});
 
 class HomeViewModel extends StateNotifier<HomeState> {
   PokemonRepository _repository;
